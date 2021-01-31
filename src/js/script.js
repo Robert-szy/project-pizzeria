@@ -90,6 +90,7 @@
       /* START: add event listener to clickable trigger on event click */
       clickableTrigger.addEventListener('click', function(event) {
 
+        /*pojedyncze klikniecie na dany produkt (tylko pierwszy) powoduje czterokrotny przebieg po tej funkcji*/
         /* prevent default action for event */
         event.preventDefault();
 
