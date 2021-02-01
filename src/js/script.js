@@ -169,7 +169,24 @@
         for(let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log(optionId, option);
+          console.log('oid: ', optionId, 'oo: ', option);
+
+          //czy dana opcja (optionId) danej kategorii (paramId) jest wybrana w formularzu (formData)
+          if (formData[paramId] && formData[paramId].includes(optionId)){
+
+            /*jeśli jest zaznaczona opcja, która nie jest domyślna, cena produktu musi się
+            zwiększyć o cenę tej opcji*/
+            if(!param.options[optionId].hasOwnProperty('default')){
+              price += param.options[optionId].price;
+            }
+
+          /*jeśli nie jest zaznaczona opcja, która jest domyślna, cena produktu musi się
+          zmniejszyć o cenę tej opcji*/
+          } else {
+            if(param.options[optionId].hasOwnProperty('default')){
+              price -= param.options[optionId].price;
+            }
+          }
         }
       }
 
