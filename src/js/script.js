@@ -97,6 +97,7 @@
       console.log('thisProduct.cartButton: ',thisProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       console.log('thisProduct.priceElem: ',thisProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion(){
@@ -171,8 +172,15 @@
           const option = param.options[optionId];
           console.log('oid: ', optionId, 'oo: ', option);
 
+          const optionImage = thisProduct.imageWrapper.querySelector('.'+paramId+'-'+optionId);
+          console.log(optionImage);
+
           //czy dana opcja (optionId) danej kategorii (paramId) jest wybrana w formularzu (formData)
           if (formData[paramId] && formData[paramId].includes(optionId)){
+
+            if(optionImage){
+              optionImage.classList.add(classNames.menuProduct.imageVisible);
+            }
 
             /*jeśli jest zaznaczona opcja, która nie jest domyślna, cena produktu musi się
             zwiększyć o cenę tej opcji*/
@@ -183,6 +191,11 @@
           /*jeśli nie jest zaznaczona opcja, która jest domyślna, cena produktu musi się
           zmniejszyć o cenę tej opcji*/
           } else {
+
+            if(optionImage){
+              optionImage.classList.remove(classNames.menuProduct.imageVisible);
+            }
+
             if(param.options[optionId].hasOwnProperty('default')){
               price -= param.options[optionId].price;
             }
