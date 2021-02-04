@@ -101,6 +101,7 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
+      //thisProduct.prepareCartProduct();
       //console.log('new Product: ', thisProduct);
     }
 
@@ -181,6 +182,7 @@
 
       thisProduct.cartButton.addEventListener('click', function(event){
         event.preventDefault();
+        thisProduct.addToCart();
         thisProduct.processOrder();
       });
     }
@@ -248,11 +250,36 @@
         }
       }
 
+      // add priceSingle property
+      thisProduct.priceSingle = price;
       // multiply price by amount
       price*=thisProduct.amountWidget.value;
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
     }
+
+    prepareCartProduct(){
+      const thisProduct = this;
+
+      const productSummary = {
+        id: thisProduct.id,
+        name: thisProduct.data.name,
+        amount: thisProduct.amountWidget.value,
+        priceSingle: thisProduct.priceSingle,
+        price: thisProduct.priceSingle*thisProduct.amountWidget.value,
+        params: {
+
+        },
+      };
+      return productSummary;
+    }
+
+    addToCart(){
+      const thisProduct = this;
+      app.cart.add(thisProduct.prepareCartProduct());
+    }
+
+
   }
 
   // eslint-disable-next-line no-unused-vars
@@ -325,6 +352,7 @@
       thisCart.products = [];
       thisCart.getElements(element);
       thisCart.initActions();
+      //thisCart.add(element);
 
       console.log('newCart', thisCart);
     }
@@ -344,7 +372,12 @@
         event.preventDefault();
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
 
+    add(menuProduct){
+      //const thisCart = this;
+
+      console.log('adding product: ', menuProduct);
     }
   }
 
@@ -365,7 +398,7 @@
       const thisApp = this;
 
       const cartElem = document.querySelector(select.containerOf.cart);
-      thisApp.Cart = new Cart(cartElem);
+      thisApp.cart = new Cart(cartElem);
     },
     init: function(){
       const thisApp = this;
