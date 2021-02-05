@@ -101,8 +101,7 @@
       thisProduct.initOrderForm();
       thisProduct.initAmountWidget();
       thisProduct.processOrder();
-      //thisProduct.prepareCartProduct();
-      //console.log('new Product: ', thisProduct);
+      //thisProduct.prepareCartProductParams();
     }
 
     renderInMenu(){
@@ -267,16 +266,45 @@
         amount: thisProduct.amountWidget.value,
         priceSingle: thisProduct.priceSingle,
         price: thisProduct.priceSingle*thisProduct.amountWidget.value,
-        params: {
-
-        },
+        params: thisProduct.prepareCartProductParams(),
       };
+      thisProduct.prepareCartProductParams();
       return productSummary;
     }
 
     addToCart(){
       const thisProduct = this;
       app.cart.add(thisProduct.prepareCartProduct());
+    }
+
+    prepareCartProductParams(){
+      const thisProduct = this;
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      const params = {
+
+      };
+      // for every category (param)...
+      for(let paramId in thisProduct.data.params) {
+        // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
+        const param = thisProduct.data.params[paramId];
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        };
+
+        // for every option in this category
+        for(let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          //czy dana opcja (optionId) danej kategorii (paramId) jest wybrana w formularzu (formData)
+          if (optionSelected){
+            params[paramId].options[optionId] = option.label;
+
+          }
+        }
+      }
+      console.log('thisProduct params', params);
+      return params;
     }
 
 
