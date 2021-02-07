@@ -41,7 +41,13 @@
       productList: '.cart__order-summary',
       toggleTrigger: '.cart__summary',
       totalNumber: `.cart__total-number`,
-      totalPrice: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+      // wersja pierwotna - nie czyta drugiej czesci selektora totalPrice: '.cart__total-price strong, .cart__order-total .cart__order-price-sum strong',
+
+      //wersja zmieniona - z rozbiciem na dwa selecty
+      totalPrice: '.cart__total-price strong',
+      totalOrderPrice: '.cart__order-total .cart__order-price-sum strong',
+      //koniec wersji zmienionej
+
       subtotalPrice: '.cart__order-subtotal .cart__order-price-sum strong',
       deliveryFee: '.cart__order-delivery .cart__order-price-sum strong',
       form: '.cart__order',
@@ -390,6 +396,15 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
+      thisCart.dom.deliveryFee = thisCart.dom.wrapper.querySelector(select.cart.deliveryFee);
+      thisCart.dom.subtotalPrice = thisCart.dom.wrapper.querySelector(select.cart.subtotalPrice);
+      thisCart.dom.totalPrice = thisCart.dom.wrapper.querySelector(select.cart.totalPrice);
+
+      //dodane po rozbiciu selektora
+      thisCart.dom.totalOrderPrice = thisCart.dom.wrapper.querySelector(select.cart.totalOrderPrice);
+      //koniec zmiany
+
+      thisCart.dom.totalNumber = thisCart.dom.wrapper.querySelector(select.cart.totalNumber);
     }
 
     initActions(){
@@ -413,9 +428,34 @@
       thisCart.dom.productList.appendChild(thisCart.generatedDOM);
 
       thisCart.products.push(new CartProduct(menuProduct, thisCart.generatedDOM));
+      thisCart.update();
+    }
 
-      console.log('adding product: ', menuProduct);
-      console.log('thisCart products: ', thisCart.products);
+    update(){
+      const thisCart = this;
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+      let totalNumber = 0;
+      let subtotalPrice = 0;
+
+      for(let product=0; product<thisCart.products.length; product++){
+        totalNumber += thisCart.products[product].amount;
+        subtotalPrice += thisCart.products[product].price;
+      }
+
+      if (totalNumber){
+        thisCart.totalPrice = subtotalPrice + deliveryFee;
+        thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+        thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
+        thisCart.dom.totalPrice.innerHTML = subtotalPrice + deliveryFee;
+
+        //dodane po rozbiciu selektora
+        thisCart.dom.totalOrderPrice.innerHTML = subtotalPrice + deliveryFee;
+        //koniec zmiany
+      }
+
+      console.log('deliveryFee: ', deliveryFee, 'totalNumber: ', totalNumber, 'subtotalPrice: ', subtotalPrice, 'totalPrice: ', thisCart.totalPrice);
+      //thisProduct.priceElem.innerHTML = price;
+
     }
   }
 
