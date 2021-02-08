@@ -472,12 +472,10 @@
       const thisCart = this;
       const index = thisCart.products.indexOf(cartProduct);
       if(index>=0){
-        console.log('thisCart: ', thisCart);
-        console.log('cartProduct: ', cartProduct);
-        console.log('index: ', index);
         thisCart.products.splice(index,1);
-        console.log('thisCart: ', thisCart);
-        thisCart.generatedDOM.remove();
+        thisCart.dom.productList.children[index].remove();
+
+        thisCart.update();
       }
 
     }
