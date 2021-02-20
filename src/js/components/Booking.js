@@ -1,5 +1,7 @@
 import {templates, select } from '../settings.js';
 import AmountWidget from './AmountWidget.js';
+import DatePicker from './DatePicker.js';
+import HourPicker from './HourPicker.js';
 
 
 
@@ -37,6 +39,9 @@ class Booking {
     thisBooking.dom.peopleAmountElem = document.querySelector(select.booking.peopleAmount);
     thisBooking.dom.hoursAmountElem = document.querySelector(select.booking.hoursAmount);
 
+    thisBooking.dom.datePickerElem = document.querySelector(select.widgets.datePicker.wrapper);
+    thisBooking.dom.hourPickerElem = document.querySelector(select.widgets.hourPicker.wrapper);
+
   }
 
   initWidgets(){
@@ -44,23 +49,21 @@ class Booking {
     thisBooking.peopleAmountWidget = new AmountWidget(thisBooking.dom.peopleAmountElem);
     thisBooking.dom.peopleAmountElem.addEventListener('updated', function(event){
       event.preventDefault();
-      //thisBooking.amount = thisBooking.amountWidget.value;
-      //thisBooking.price = thisBooking.amount * thisBooking.priceSingle;
-
-      //thisBooking.dom.amount.innerHTML = thisBooking.amount;
-      //thisBooking.dom.price.innerHTML = thisBooking.price;
-
     });
 
     thisBooking.hoursAmountWidget = new AmountWidget(thisBooking.dom.hoursAmountElem);
     thisBooking.dom.hoursAmountElem.addEventListener('updated', function(event){
       event.preventDefault();
-      //thisBooking.amount = thisBooking.amountWidget.value;
-      //thisBooking.price = thisBooking.amount * thisBooking.priceSingle;
+    });
 
-      //thisBooking.dom.amount.innerHTML = thisBooking.amount;
-      //thisBooking.dom.price.innerHTML = thisBooking.price;
+    thisBooking.datePickerWidget = new DatePicker(thisBooking.dom.datePickerElem);
+    thisBooking.dom.datePickerElem.addEventListener('updated', function(event){
+      event.preventDefault();
+    });
 
+    thisBooking.hourPickerWidget = new HourPicker(thisBooking.dom.hourPickerElem);
+    thisBooking.dom.hourPickerElem.addEventListener('updated', function(event){
+      event.preventDefault();
     });
 
   }
