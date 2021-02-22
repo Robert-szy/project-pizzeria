@@ -10,9 +10,13 @@ class Booking {
   constructor(bookingContainer){
     const thisBooking = this;
 
+    const tableSelected = null;
+
     thisBooking.render(bookingContainer);
     thisBooking.initWidgets();
     thisBooking.getData();
+
+
   }
 
   getData(){
@@ -188,6 +192,12 @@ class Booking {
 
     thisBooking.dom.tables = document.querySelectorAll(select.booking.tables);
 
+    thisBooking.dom.floorPlan = document.querySelector(select.booking.floorPlan);
+
+  }
+
+  initTables(event){
+
   }
 
   initWidgets(){
@@ -215,6 +225,12 @@ class Booking {
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
+
+    thisBooking.dom.floorPlan.addEventListener('clicked', function(event){
+      event.preventDefault();
+      thisBooking.initTables(event);
+    });
+
   }
 }
 
