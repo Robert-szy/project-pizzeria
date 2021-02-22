@@ -173,6 +173,10 @@
       }
 
     }
+
+    &.selected {
+      background-color: aquamarine;
+    }
   }
 
   [data-table="1"] {
