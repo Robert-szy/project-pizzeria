@@ -31,17 +31,13 @@ class Booking {
       table: parseInt(thisBooking.tableSelected),
       duration: parseInt(thisBooking.hoursAmountWidget.correctValue),
       ppl: parseInt(thisBooking.peopleAmountWidget.correctValue),
-      starters: [],
+      starters: thisBooking.starters,
       phone: thisBooking.phone,
       address: thisBooking.address,
     };
 
     console.log('url: ', url);
     console.log('payload: ', payload);
-
-    for(let start of thisBooking.starters) {
-      payload.starters.push(thisBooking.starters[start]);
-    }
 
     const options = {
       method: 'POST',
@@ -321,24 +317,13 @@ class Booking {
 
     for(let check of thisBooking.dom.starters){
       check.addEventListener('click', function(event){
-        //event.preventDefault();
         thisBooking.updateStarters(event);
       });
     }
 
-
-    /*
-    for(let starter of thisBooking.dom.starters){
-      starter.addEventListener('change', function(event){
-        event.preventDefault();
-        thisBooking.starters.push(starter);
-      });
-    }
-    */
-
-    thisBooking.dom.submit.addEventListener('submit', function(event){
+    thisBooking.dom.submit.addEventListener('click', function(event){
       event.preventDefault();
-      thisBooking.sendOrder();
+      thisBooking.sendBooking();
     });
 
     thisBooking.dom.address.addEventListener('change', function(event) {
