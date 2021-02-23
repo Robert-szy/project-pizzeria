@@ -10,11 +10,13 @@ class Booking {
   constructor(bookingContainer){
     const thisBooking = this;
 
-    const tableSelected = null;
+    thisBooking.tableSelected = null;
+
 
     thisBooking.render(bookingContainer);
     thisBooking.initWidgets();
     thisBooking.getData();
+    thisBooking.resetTables();
 
 
   }
@@ -196,9 +198,35 @@ class Booking {
 
   }
 
+  resetTables(){
+    const thisBooking = this;
+    for(let table = 0; table<=2; table++){
+      thisBooking.dom.tables[table].classList.remove('selected');
+    }
+  }
+
   initTables(event){
+    const thisBooking = this;
+
+    if(event.target.classList.contains('table')){
+      if(event.target.classList.contains('booked')){
+        console.log('stolik zajęty');
+      } else {
+        if(!event.target.classList.contains('selected')){
+          thisBooking.resetTables();
+          event.target.classList.toggle('selected');
+          thisBooking.tableSelected = parseInt(event.target.dataset.table);
+        } else {
+
+          event.target.classList.toggle('selected');
+        }
+      }
+    }
+
 
   }
+
+
 
   initWidgets(){
     const thisBooking = this;
@@ -215,18 +243,20 @@ class Booking {
     thisBooking.datePickerWidget = new DatePicker(thisBooking.dom.datePickerElem);
     thisBooking.dom.datePickerElem.addEventListener('updated', function(event){
       event.preventDefault();
+      thisBooking.resetTables();
     });
 
     thisBooking.hourPickerWidget = new HourPicker(thisBooking.dom.hourPickerElem);
     thisBooking.dom.hourPickerElem.addEventListener('updated', function(event){
       event.preventDefault();
+      thisBooking.resetTables();
     });
 
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
     });
 
-    thisBooking.dom.floorPlan.addEventListener('clicked', function(event){
+    thisBooking.dom.floorPlan.addEventListener('click', function(event){
       event.preventDefault();
       thisBooking.initTables(event);
     });
