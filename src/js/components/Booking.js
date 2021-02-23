@@ -10,15 +10,53 @@ class Booking {
   constructor(bookingContainer){
     const thisBooking = this;
 
+    thisBooking.starters = [];
     thisBooking.tableSelected = null;
+    thisBooking.phone = null;
+    thisBooking.address = null;
 
 
     thisBooking.render(bookingContainer);
     thisBooking.initWidgets();
     thisBooking.getData();
     thisBooking.resetTables();
+  }
 
+  sendBooking(){
+    const thisBooking = this;
+    const url = settings.db.url + '/' + settings.db.booking;
+    const payload = {
+      date: thisBooking.date,
+      hour: utils.numberToHour(thisBooking.hour),
+      table: parseInt(thisBooking.tableSelected),
+      duration: parseInt(thisBooking.hoursAmountWidget.correctValue),
+      ppl: parseInt(thisBooking.peopleAmountWidget.correctValue),
+      starters: [],
+      phone: thisBooking.phone,
+      address: thisBooking.address,
+    };
 
+    console.log('url: ', url);
+    console.log('payload: ', payload);
+
+    for(let start of thisBooking.starters) {
+      payload.starters.push(thisBooking.starters[start]);
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function(response){
+        return response.json();
+      }).then(function(parsedResponse){
+        console.log('parsedResponse: ', parsedResponse);
+      });
   }
 
   getData(){
@@ -177,7 +215,7 @@ class Booking {
 
     //jak lepiej? czy dodać wygenerowany html czy utworzony DOM? czy to czym się potem różni? inaczej działa
     //v1
-    thisBooking.dom.wrapper.innerHTML = generatedHTML;
+    //bookingContainer.innerHTML = generatedHTML;
 
     //v2
     //thisBooking.dom = utils.createDOMFromHTML(generatedHTML);
@@ -196,10 +234,18 @@ class Booking {
 
     thisBooking.dom.floorPlan = document.querySelector(select.booking.floorPlan);
 
+    thisBooking.dom.starters = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address);
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone);
+
+    thisBooking.dom.submit = thisBooking.dom.wrapper.querySelector(select.booking.submit);
+
+
   }
 
   resetTables(){
     const thisBooking = this;
+
     for(let table = 0; table<=2; table++){
       thisBooking.dom.tables[table].classList.remove('selected');
     }
@@ -217,8 +263,8 @@ class Booking {
           event.target.classList.toggle('selected');
           thisBooking.tableSelected = parseInt(event.target.dataset.table);
         } else {
-
           event.target.classList.toggle('selected');
+          thisBooking.tableSelected = null;
         }
       }
     }
@@ -226,10 +272,21 @@ class Booking {
 
   }
 
+  updateStarters(event){
+    const thisBooking = this;
+    const starter = thisBooking.starters;
 
+    if (event.target.checked && starter.indexOf(event.target.value)<0){
+      starter.push(event.target.value);
+    } else {
+      starter.splice(starter.indexOf(event.target.value), 1);
+    }
+  }
 
   initWidgets(){
     const thisBooking = this;
+    //const starter = starterstab;
+
     thisBooking.peopleAmountWidget = new AmountWidget(thisBooking.dom.peopleAmountElem);
     thisBooking.dom.peopleAmountElem.addEventListener('updated', function(event){
       event.preventDefault();
@@ -261,6 +318,38 @@ class Booking {
       thisBooking.initTables(event);
     });
 
+
+    for(let check of thisBooking.dom.starters){
+      check.addEventListener('click', function(event){
+        //event.preventDefault();
+        thisBooking.updateStarters(event);
+      });
+    }
+
+
+    /*
+    for(let starter of thisBooking.dom.starters){
+      starter.addEventListener('change', function(event){
+        event.preventDefault();
+        thisBooking.starters.push(starter);
+      });
+    }
+    */
+
+    thisBooking.dom.submit.addEventListener('submit', function(event){
+      event.preventDefault();
+      thisBooking.sendOrder();
+    });
+
+    thisBooking.dom.address.addEventListener('change', function(event) {
+      event.preventDefault();
+      thisBooking.address = event.target.value;
+    });
+
+    thisBooking.dom.phone.addEventListener('change', function(event) {
+      event.preventDefault();
+      thisBooking.phone = event.target.value;
+    });
   }
 }
 
