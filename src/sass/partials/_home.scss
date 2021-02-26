@@ -1,0 +1,48 @@
+.first-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 74px 49px;
+  .block{
+    position: relative;
+    flex: 1 1 ;
+    text-align: center;
+    height: 121px;
+    margin: 4px;
+    font-family: $font-header;
+    font-size: 22px;
+    font-weight: 500;
+    color: $color-light;
+    background-color: $color-dark;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      font-family: $font-text;
+      font-size: 11px;
+      font-weight: lighter;
+    }
+  }
+  .block:first-child {
+    background-image: url("../../images/pizza-1.jpg");
+    cursor: pointer;
+    :hover{
+      transition: all 1s;
+      transform: translateY(-20px);
+    }
+  }
+  .block:nth-child(2) {
+    background-image: url("../../images/pizza-2.jpg");
+    cursor: pointer;
+    :hover{
+      transition: all 1s;
+      transform: translateY(-20px);
+    }
+  }
+  .block:nth-child(3) {
+    flex: 2 100%;
+    background-color: $color-main;
+  }
+}
+
+
