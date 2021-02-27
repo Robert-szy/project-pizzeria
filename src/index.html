@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -66,7 +67,7 @@
 
   <div id="pages">
     <section id="home">
-      <div id="home-page" class="home-page container"></div>
+      <div class="home-page container"></div>
     </section>
     <section id="order">
       <div id="product-list" class="product-list container"></div>
@@ -76,19 +77,91 @@
     </section>
   </div>
 
-  <div class="home container">
-    <div class="first-section">
-      <div class="block" id="block-order"><p>ORDER ONLINE</p></div>
-      <div class="block" id="block-booking"><p>BOOK A TABLE</p></div>
-      <div class="block"><p>OPENING HOURS:<br><span>TUE-SUN, 12PM:12AM</span></p></div>
+  <script id="template-home-page" type="text/x-handlebars-template">
+    <div class="home container">
+      <div class="first-section">
+        <div class="block" id="block-order"><p>ORDER ONLINE</p></div>
+        <div class="block" id="block-booking"><p>BOOK A TABLE</p></div>
+        <div class="block"><p>OPENING HOURS:<br><span>TUE-SUN, 12PM:12AM</span></p></div>
+      </div>
+      <div class="citation">
+        <div class="main-carousel">
+          <div class="carousel-cell">
+            <img src="images/pizza-3.jpg">
+          </div>
+          <div class="carousel-cell">
+            <div class="cell-text">
+              <h2>Doskonałe!</h2>
+              <p>Tu jest jakis tam sobie opis<br><span>podpisano: Marcin</span></p>
+            </div>
+          </div>
+          <div class="carousel-cell">
+            <img src="images/pizza-3.jpg">
+          </div>
+          <div class="carousel-cell">
+            <h2>Doskonałe!</h2>
+            <p>Tu jest jakis tam sobie opis<br><span>podpisano: Marcin</span></p>
+          </div>
+          <div class="carousel-cell">
+            <img src="images/pizza-3.jpg">
+          </div>
+          <div class="carousel-cell">
+            <h2>Doskonałe!</h2>
+            <p>Tu jest jakis tam sobie opis<br><span>podpisano: Marcin</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="gallery">
+        <div class="row">
+          <div class="tile">
+            <img src="images/pizza-4.jpg">
+            <div class="a-container">
+              <a href="#"><i class="fas fa-heart"></i></a>
+              <a href="#"><i class="fas fa-share-alt"></i></a>
+            </div>
+          </div>
+          <div class="tile">
+            <img src="images/pizza-5.jpg">
+            <div class="a-container">
+              <a href="#"><i class="fas fa-heart"></i></a>
+              <a href="#"><i class="fas fa-share-alt"></i></a>
+            </div>
+          </div>
+          <div class="tile">
+            <img src="images/pizza-6.jpg">
+            <div class="a-container">
+              <a href="#"><i class="fas fa-heart"></i></a>
+              <a href="#"><i class="fas fa-share-alt"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="tile">
+            <img src="images/pizza-7.jpg">
+            <div class="a-container">
+              <a href="#"><i class="fas fa-heart"></i></a>
+              <a href="#"><i class="fas fa-share-alt"></i></a>
+            </div>
+          </div>
+          <div class="tile">
+            <img src="images/pizza-8.jpg">
+            <div class="a-container">
+              <a href="#"><i class="fas fa-heart"></i></a>
+              <a href="#"><i class="fas fa-share-alt"></i></a>
+            </div>
+          </div>
+          <div class="tile">
+            <img src="images/pizza-9.jpg">
+            <div class="a-container">
+              <a href="#"><i class="fas fa-heart"></i></a>
+              <a href="#"><i class="fas fa-share-alt"></i></a>
+            </div>
+          </div>
+        </div>
+        <a href="#link">View more on Instagram</a>
+      </div>
     </div>
-    <div class="citation">
-asdasd
-    </div>
-    <div class="gallery">
-asdasd
-    </div>
-  </div>
+  </script>
 
   <script id="template-booking-widget" type="text/x-handlebars-template">
     <div class="booking-widget">
@@ -266,6 +339,7 @@ asdasd
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
   <script src="vendor/range-slider.min.js"></script>
+  <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.js"></script>
   <script src="js/app.js" type="module"></script>
 </body>
 </html>
