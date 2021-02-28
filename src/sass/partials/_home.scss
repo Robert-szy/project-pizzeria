@@ -63,6 +63,7 @@
     margin: 10px;
     text-align: left;
     padding-left: 20px;
+
     h2 {
       font-family: $font-text;
       font-weight: bold;
@@ -70,6 +71,7 @@
 
     p {
       font-weight: normal;
+
       span {
         font-style: italic;
       }
@@ -79,6 +81,7 @@
       width: 100%;
       object-fit: cover;
     }
+
     .cell-text {
       margin: 10px;
     }
@@ -91,15 +94,18 @@
   margin-bottom: 80px;
   display: flex;
   flex-wrap: wrap;
+
   .row {
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
     position: relative;
     height: 195px;
+
     .tile {
       position: relative;
       margin: 7px;
+
       .image {
         display: block;
         width: 100%;
@@ -123,9 +129,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+
         a {
           color: $color-light;
           opacity: 0;
+
           :hover {
             color: $color-danger;
             transition: 1s;
@@ -144,6 +152,7 @@
       }
     }
   }
+
   a {
     color: $color-danger;
     font-family: $font-text;
