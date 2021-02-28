@@ -119,7 +119,7 @@ const app = {
     const thisApp = this;
 
     const homeElem = document.querySelector(select.containerOf.home);
-    thisApp.cart = new Home(thisApp, homeElem);
+    thisApp.home = new Home(thisApp, homeElem);
 
   },
 
