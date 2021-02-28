@@ -75,6 +75,10 @@ export const select = {
     phone: '[name="phone"]',
     address: '[name="address"]',
   },
+  home: {
+    order: '#block-order',
+    booking: '#block-booking',
+  },
   nav: {
     links: '.main-nav a',
   },

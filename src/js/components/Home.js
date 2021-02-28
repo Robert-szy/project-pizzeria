@@ -5,12 +5,12 @@ import {templates, select} from '../settings.js';
 
 
 class Home {
-  constructor(element){
+  constructor(app, element){
     const thisHome = this;
 
     thisHome.getElements();
     thisHome.render(element);
-    thisHome.initWidgets();
+    thisHome.initWidgets(app);
 
     console.log('newHome', thisHome);
   }
@@ -34,10 +34,13 @@ class Home {
     thisHome.dom.wrapper.innerHTML = generatedHTML;
 
     thisHome.dom.carouselElem = document.querySelector(select.widgets.carousel.wrapper);
+    thisHome.dom.orderElem = document.querySelector(select.home.order);
+    thisHome.dom.bookingElem = document.querySelector(select.home.booking);
   }
 
-  initWidgets(){
+  initWidgets(app){
     const thisHome = this;
+    const thisApp = app;
     // eslint-disable-next-line no-undef
     const flkty = new Flickity ( thisHome.dom.carouselElem, {
       // options
@@ -54,6 +57,20 @@ class Home {
 
     //flkty.next();
     flkty.select( 3 );
+
+    thisHome.dom.orderElem.addEventListener('click', function(event){
+      const clickedElement = this;
+      event.preventDefault();
+      const id = clickedElement.getAttribute('id').replace('block-', '');
+      thisApp.activatePage(id);
+    });
+
+    thisHome.dom.bookingElem.addEventListener('click', function(event){
+      const clickedElement = this;
+      event.preventDefault();
+      const id = clickedElement.getAttribute('id').replace('block-', '');
+      thisApp.activatePage(id);
+    });
   }
 }
 

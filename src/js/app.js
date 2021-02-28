@@ -37,7 +37,7 @@ const app = {
         thisApp.activatePage(id);
 
         /**change URL hash */
-        window.location.hash = '#/' + id;
+        //window.location.hash = '#/' + id;
       });
     }
 
@@ -60,6 +60,8 @@ const app = {
       );
 
     }
+
+    window.location.hash = '#/' + pageId;
   },
 
   initBooking: function(){
@@ -117,7 +119,7 @@ const app = {
     const thisApp = this;
 
     const homeElem = document.querySelector(select.containerOf.home);
-    thisApp.cart = new Home(homeElem);
+    thisApp.cart = new Home(thisApp, homeElem);
 
   },
 
